@@ -7,7 +7,7 @@ import ai.nota.rbac.application.account.dto.request.EmailVerifyRequest
 import ai.nota.rbac.application.account.dto.request.VerifyEmailRequest
 import ai.nota.rbac.application.account.dto.response.AccountSignInSuccessResponse
 import ai.nota.rbac.application.account.dto.response.AccountSignupSuccessResponse
-import ai.nota.rbac.domain.service.EmailVerifyUseCase
+import ai.nota.rbac.domain.account.service.EmailVerifyUseCase
 
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -45,9 +45,9 @@ class AccountCommandController(
     @PostMapping("/verify/email")
     fun sendVerifyCodeToEmail(
         @RequestBody requestBody: EmailVerifyRequest
-    ): Any {
-        val a = emailVerifyUseCase.sendVerifyCodeToEmail(requestBody.email)
-        return a
+    ): HttpApiResponse<Unit> {
+        emailVerifyUseCase.sendVerifyCodeToEmail(requestBody.email)
+        return HttpApiResponse.ok()
     }
 
     /**
@@ -57,6 +57,7 @@ class AccountCommandController(
     fun verifyEmailCode(
         @RequestBody requestBody: VerifyEmailRequest,
     ): HttpApiResponse<Unit> {
+        emailVerifyUseCase.verifyEmailCode(requestBody.email, requestBody.code)
         return HttpApiResponse.ok()
     }
 

@@ -1,4 +1,4 @@
-package ai.nota.rbac.domain.service
+package ai.nota.rbac.domain.account.service
 
 interface EmailVerifyUseCase {
     fun sendVerifyCodeToEmail(email: String): String
